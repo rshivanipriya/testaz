@@ -2,6 +2,7 @@
 import fastapi
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+import os
 
 app = fastapi.FastAPI(
     title="My API",
@@ -24,4 +25,5 @@ def read_root():
 
 # This is to run in localhost, comment out while pushing to deploy on Azure
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port = 8000, log_level='info')
+    port = int(os.getenv("WEBSITES_PORT", 8000))  # Read port from environment variable
+    uvicorn.run(app, host="0.0.0.0", port=port)
